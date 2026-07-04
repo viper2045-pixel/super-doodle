@@ -15,7 +15,7 @@ class GeminiGenerator(BaseImageGenerator):
 
     def __init__(self, api_key: Optional[str] = None):
         """Initialize Gemini generator.
-        
+
         Args:
             api_key: Google API key (defaults to GOOGLE_API_KEY env var)
         """
@@ -35,12 +35,12 @@ class GeminiGenerator(BaseImageGenerator):
         max_tokens: int = 1024,
     ) -> str:
         """Generate image using Google Gemini.
-        
+
         Args:
             prompt: Image description
             temperature: Sampling temperature (0-1)
             max_tokens: Max response tokens
-            
+
         Returns:
             Generated image data or URL
         """
@@ -52,9 +52,15 @@ class GeminiGenerator(BaseImageGenerator):
 
         try:
             logger.info(f"Generating with Gemini: {prompt[:50]}...")
-            # Gemini API returns generation data
-            # In real implementation, you'd handle the response appropriately
-            result = f"gemini_image_url_{int(time.time())}"
+            generation_config = genai.GenerationConfig(
+                temperature=temperature,
+                max_output_tokens=max_tokens,
+            )
+            response = self.model.generate_content(
+                prompt,
+                generation_config=generation_config,
+            )
+            result = response.text
             self._set_cache(cache_key, result)
             self._log_generation(prompt, result)
             return result
@@ -68,11 +74,11 @@ class GeminiGenerator(BaseImageGenerator):
         max_retries: int = 3,
     ) -> List[str]:
         """Generate multiple images with retry logic.
-        
+
         Args:
             prompts: List of image descriptions
             max_retries: Maximum retry attempts per prompt
-            
+
         Returns:
             List of generated image URLs/data
         """
@@ -88,7 +94,7 @@ class GeminiGenerator(BaseImageGenerator):
                 except Exception as e:
                     retry_count += 1
                     if retry_count < max_retries:
-                        wait_time = 2 ** retry_count
+                        wait_time = 2**retry_count
                         logger.warning(
                             f"Retry {retry_count}/{max_retries} after {wait_time}s"
                         )

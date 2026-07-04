@@ -14,7 +14,7 @@ class DALLEGenerator(BaseImageGenerator):
 
     def __init__(self, api_key: Optional[str] = None):
         """Initialize DALL-E generator.
-        
+
         Args:
             api_key: OpenAI API key (defaults to OPENAI_API_KEY env var)
         """
@@ -36,13 +36,13 @@ class DALLEGenerator(BaseImageGenerator):
         n: int = 1,
     ) -> str:
         """Generate image using DALL-E 3.
-        
+
         Args:
             prompt: Image description
             size: Image size (1024x1024, 1792x1024, 1024x1792)
             quality: Quality level (standard or hd)
             n: Number of images (DALL-E 3 only supports n=1)
-            
+
         Returns:
             URL of generated image
         """
@@ -77,12 +77,12 @@ class DALLEGenerator(BaseImageGenerator):
         quality: str = "standard",
     ) -> List[str]:
         """Generate multiple images.
-        
+
         Args:
             prompts: List of image descriptions
             size: Image size
             quality: Quality level
-            
+
         Returns:
             List of image URLs
         """
@@ -104,12 +104,12 @@ class DALLEGenerator(BaseImageGenerator):
         size: str = "1024x1024",
     ) -> List[str]:
         """Generate variations of a prompt.
-        
+
         Args:
             prompt: Base image description
             num_variations: Number of variations to create
             size: Image size
-            
+
         Returns:
             List of variation URLs
         """
@@ -122,7 +122,7 @@ class DALLEGenerator(BaseImageGenerator):
             ", different composition",
         ]
 
-        for i, hint in enumerate(variation_hints[: num_variations]):
+        for i, hint in enumerate(variation_hints[:num_variations]):
             varied_prompt = prompt + hint
             try:
                 url = self.generate(varied_prompt, size=size)

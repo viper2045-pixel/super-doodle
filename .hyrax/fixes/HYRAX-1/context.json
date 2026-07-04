@@ -1,0 +1,14 @@
+{
+  "affected_projects": [],
+  "audit_job_id": null,
+  "category": "correctness",
+  "created_at": "2026-07-04T13:11:34.077850+00:00",
+  "file": "generators/gemini_generator.py",
+  "line": 57,
+  "mode": "finding",
+  "project_path": null,
+  "ref": "HYRAX-1",
+  "severity": "critical",
+  "title": "Gemini generator returns stub string instead of real API result",
+  "tool": "mini_audit"
+}

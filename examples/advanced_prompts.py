@@ -53,43 +53,49 @@ class PromptBuilder:
     def build(self) -> str:
         """Build final prompt"""
         parts = []
-        
+
         if "subject" in self.components:
             parts.append(self.components["subject"])
-        
+
         if "style" in self.components:
             parts.append(f", {self.components['style']}")
-        
+
         if "mood" in self.components:
             parts.append(f", {self.components['mood']}")
-        
+
         if "lighting" in self.components:
             parts.append(f", {self.components['lighting']}")
-        
+
         if "details" in self.components:
             parts.append(f", {self.components['details']}")
-        
+
         if "quality" in self.components:
             parts.append(f", {self.components['quality']}")
-        
+
         return "".join(parts)
 
 
 def example_fantasy_landscape():
     """Generate fantasy landscape with advanced prompt"""
     logger.info("=== Fantasy Landscape Example ===")
-    
-    prompt = (PromptBuilder()
-        .set_subject("A majestic fantasy kingdom built on floating islands in the clouds")
+
+    prompt = (
+        PromptBuilder()
+        .set_subject(
+            "A majestic fantasy kingdom built on floating islands in the clouds"
+        )
         .set_style("oil painting by John Howe")
         .set_mood("mystical and wondrous, ethereal mist")
         .set_lighting("golden sunlight breaking through clouds, dramatic shadows")
-        .set_details("ornate towers, ancient architecture, waterfalls flowing between islands")
+        .set_details(
+            "ornate towers, ancient architecture, waterfalls flowing between islands"
+        )
         .set_quality("4K, ultra-detailed, high resolution")
-        .build())
-    
+        .build()
+    )
+
     logger.info(f"Prompt: {prompt}")
-    
+
     try:
         generator = DALLEGenerator()
         url = generator.generate(prompt, quality="hd")
@@ -103,18 +109,22 @@ def example_fantasy_landscape():
 def example_product_photography():
     """Generate product photography with advanced prompt"""
     logger.info("=== Product Photography Example ===")
-    
-    prompt = (PromptBuilder()
+
+    prompt = (
+        PromptBuilder()
         .set_subject("A sleek stainless steel smartwatch on a minimalist white surface")
         .set_style("professional product photography")
         .set_mood("clean, modern, luxurious")
         .set_lighting("studio lighting with soft shadows, warm accent lights")
-        .set_details("reflection on surface, minimalist composition, branded watch face")
+        .set_details(
+            "reflection on surface, minimalist composition, branded watch face"
+        )
         .set_quality("sharp focus, high-end commercial photography, 4K")
-        .build())
-    
+        .build()
+    )
+
     logger.info(f"Prompt: {prompt}")
-    
+
     try:
         generator = DALLEGenerator()
         url = generator.generate(prompt, size="1024x1024")
@@ -128,18 +138,22 @@ def example_product_photography():
 def example_character_concept_art():
     """Generate character concept art with advanced prompt"""
     logger.info("=== Character Concept Art Example ===")
-    
-    prompt = (PromptBuilder()
+
+    prompt = (
+        PromptBuilder()
         .set_subject("A confident female warrior in advanced futuristic battle armor")
         .set_style("concept art by Artstation, anime aesthetic")
         .set_mood("determined and powerful, ready for action")
         .set_lighting("neon blue and purple accent lighting, volumetric light rays")
-        .set_details("holographic HUD elements, high-tech gauntlets, cape with digital patterns")
+        .set_details(
+            "holographic HUD elements, high-tech gauntlets, cape with digital patterns"
+        )
         .set_quality("character design sheet, intricate details, 8K")
-        .build())
-    
+        .build()
+    )
+
     logger.info(f"Prompt: {prompt}")
-    
+
     try:
         generator = FluxGenerator()
         url = generator.generate(prompt)
