@@ -20,11 +20,7 @@ def generate_with_dalle():
     try:
         generator = DALLEGenerator()
         prompt = "A serene mountain landscape at sunset, oil painting style"
-        url = generator.generate(
-            prompt=prompt,
-            size="1024x1024",
-            quality="standard"
-        )
+        url = generator.generate(prompt=prompt, size="1024x1024", quality="standard")
         logger.info(f"Image URL: {url}")
         return url
     except Exception as e:
@@ -52,11 +48,7 @@ def generate_with_flux():
     try:
         generator = FluxGenerator()
         prompt = "A hyperrealistic portrait of a woman in cyberpunk armor"
-        url = generator.generate(
-            prompt=prompt,
-            height=1024,
-            width=1024
-        )
+        url = generator.generate(prompt=prompt, height=1024, width=1024)
         logger.info(f"Image URL: {url}")
         return url
     except Exception as e:
