@@ -1,7 +1,7 @@
 """Base Image Generator Abstract Class"""
 
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -12,7 +12,7 @@ class BaseImageGenerator(ABC):
 
     def __init__(self, api_key: str, timeout: int = 30):
         """Initialize base generator.
-        
+
         Args:
             api_key: API key for the service
             timeout: Request timeout in seconds
@@ -24,11 +24,11 @@ class BaseImageGenerator(ABC):
     @abstractmethod
     def generate(self, prompt: str, **kwargs) -> str:
         """Generate an image from a prompt.
-        
+
         Args:
             prompt: Text description of desired image
             **kwargs: Provider-specific parameters
-            
+
         Returns:
             URL of generated image
         """
@@ -37,11 +37,11 @@ class BaseImageGenerator(ABC):
     @abstractmethod
     def generate_batch(self, prompts: List[str], **kwargs) -> List[str]:
         """Generate multiple images from prompts.
-        
+
         Args:
             prompts: List of text descriptions
             **kwargs: Provider-specific parameters
-            
+
         Returns:
             List of image URLs
         """
