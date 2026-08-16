@@ -44,16 +44,29 @@ except ImportError as exc:  # pragma: no cover - depends on local environment
 def parse_args():
     p = argparse.ArgumentParser(description="Minimal text->image CLI prototype")
     p.add_argument("prompt", type=str, help="Text prompt to generate an image from")
-    p.add_argument("--model", type=str, default="stabilityai/stable-diffusion-2-1",
-                   help="Pretrained model id or local path (default: stabilityai/stable-diffusion-2-1)")
-    p.add_argument("--outdir", type=str, default="outputs", help="Directory to save images")
+    p.add_argument(
+        "--model",
+        type=str,
+        default="stabilityai/stable-diffusion-2-1",
+        help="Pretrained model id or local path (default: stabilityai/stable-diffusion-2-1)",
+    )
+    p.add_argument(
+        "--outdir", type=str, default="outputs", help="Directory to save images"
+    )
     p.add_argument("--steps", type=int, default=30, help="Number of inference steps")
     p.add_argument("--width", type=int, default=512, help="Image width")
     p.add_argument("--height", type=int, default=512, help="Image height")
     p.add_argument("--seed", type=int, default=None, help="RNG seed (optional)")
-    p.add_argument("--num_images", type=int, default=1, help="How many images to generate")
-    p.add_argument("--device", type=str, choices=["auto", "cpu", "cuda"], default="auto",
-                   help="Device to run on (auto detects CUDA)")
+    p.add_argument(
+        "--num_images", type=int, default=1, help="How many images to generate"
+    )
+    p.add_argument(
+        "--device",
+        type=str,
+        choices=["auto", "cpu", "cuda"],
+        default="auto",
+        help="Device to run on (auto detects CUDA)",
+    )
     return p.parse_args()
 
 
