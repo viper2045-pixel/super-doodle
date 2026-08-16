@@ -1,0 +1,14 @@
+{
+  "affected_projects": [],
+  "audit_job_id": null,
+  "category": "operations",
+  "created_at": "2026-08-16T16:05:50.210289+00:00",
+  "file": "prototype/cli/generate.py",
+  "line": 22,
+  "mode": "finding",
+  "project_path": null,
+  "ref": "HYRAX-56",
+  "severity": "high",
+  "title": "Undeclared, heavyweight runtime dependencies (torch, diffusers) used in prototype/cli/generate.py but absent from requirements.txt",
+  "tool": "deps"
+}
