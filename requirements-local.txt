@@ -1,0 +1,23 @@
+# Local generation dependencies (prototype/cli/generate.py)
+#
+# These are heavyweight, GPU-oriented ML dependencies used ONLY by the local
+# Stable Diffusion CLI prototype (prototype/cli/generate.py). They are kept
+# out of the primary requirements.txt so that installing the main project
+# (the API-based generators/ package) does not pull multi-GB torch/diffusers
+# wheels for consumers who never run the local prototype.
+#
+# Install with:
+#   pip install -r requirements.txt -r requirements-local.txt
+#
+# torch wheel selection (CPU vs CUDA build) is platform/hardware dependent;
+# see https://pytorch.org/get-started/locally/ if you need a specific CUDA
+# build instead of the default PyPI wheel.
+
+torch>=2.1.0,<3.0.0
+diffusers>=0.24.0,<1.0.0
+
+# Optional: enables enable_xformers_memory_efficient_attention() in
+# prototype/cli/generate.py. The script already guards this behind a
+# try/except, so it is safe to omit xformers entirely (e.g. on platforms
+# without prebuilt wheels).
+xformers>=0.0.23; sys_platform == "linux"

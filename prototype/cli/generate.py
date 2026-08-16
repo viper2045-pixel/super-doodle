@@ -10,32 +10,63 @@ Notes:
 - GPU (CUDA) is used automatically if available. For GPUs we attempt fp16 for lower memory use.
 - This is a minimal prototype and does NOT include a safety checker or advanced optimizations.
   Use for local experimentation only and obey model license terms.
+
+Dependencies:
+- This script requires torch and diffusers (and optionally xformers), which are
+  NOT part of the project's main requirements.txt (those cover the lightweight,
+  API-based generators/ package only). Install the local generation extras first:
+
+    pip install -r requirements.txt -r requirements-local.txt
+
+  See requirements-local.txt for pinned versions.
 """
 
 import argparse
-import os
 import json
+import os
 import time
 import uuid
 from datetime import datetime
 
-import torch
-from diffusers import DiffusionPipeline
+try:
+    import torch
+    from diffusers import DiffusionPipeline
+except ImportError as exc:  # pragma: no cover - depends on local environment
+    raise ImportError(
+        "prototype/cli/generate.py requires 'torch' and 'diffusers', which are not "
+        "part of the project's main requirements.txt (that file only covers the "
+        "lightweight, API-based generators/ package). Install the local generation "
+        "extras first:\n\n"
+        "    pip install -r requirements.txt -r requirements-local.txt\n"
+    ) from exc
 
 
 def parse_args():
     p = argparse.ArgumentParser(description="Minimal text->image CLI prototype")
     p.add_argument("prompt", type=str, help="Text prompt to generate an image from")
-    p.add_argument("--model", type=str, default="stabilityai/stable-diffusion-2-1",
-                   help="Pretrained model id or local path (default: stabilityai/stable-diffusion-2-1)")
-    p.add_argument("--outdir", type=str, default="outputs", help="Directory to save images")
+    p.add_argument(
+        "--model",
+        type=str,
+        default="stabilityai/stable-diffusion-2-1",
+        help="Pretrained model id or local path (default: stabilityai/stable-diffusion-2-1)",
+    )
+    p.add_argument(
+        "--outdir", type=str, default="outputs", help="Directory to save images"
+    )
     p.add_argument("--steps", type=int, default=30, help="Number of inference steps")
     p.add_argument("--width", type=int, default=512, help="Image width")
     p.add_argument("--height", type=int, default=512, help="Image height")
     p.add_argument("--seed", type=int, default=None, help="RNG seed (optional)")
-    p.add_argument("--num_images", type=int, default=1, help="How many images to generate")
-    p.add_argument("--device", type=str, choices=["auto", "cpu", "cuda"], default="auto",
-                   help="Device to run on (auto detects CUDA)")
+    p.add_argument(
+        "--num_images", type=int, default=1, help="How many images to generate"
+    )
+    p.add_argument(
+        "--device",
+        type=str,
+        choices=["auto", "cpu", "cuda"],
+        default="auto",
+        help="Device to run on (auto detects CUDA)",
+    )
     return p.parse_args()
 
 
