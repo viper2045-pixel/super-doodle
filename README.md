@@ -46,6 +46,14 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+3a. (Optional) If you plan to use the local Stable Diffusion CLI prototype at
+`prototype/cli/generate.py`, also install its heavyweight ML dependencies
+(torch, diffusers, and optionally xformers), which are intentionally kept out
+of the main `requirements.txt`:
+```bash
+pip install -r requirements-local.txt
+```
+
 4. Set up environment variables:
 ```bash
 cp .env.example .env

@@ -10,17 +10,35 @@ Notes:
 - GPU (CUDA) is used automatically if available. For GPUs we attempt fp16 for lower memory use.
 - This is a minimal prototype and does NOT include a safety checker or advanced optimizations.
   Use for local experimentation only and obey model license terms.
+
+Dependencies:
+- This script requires torch and diffusers (and optionally xformers), which are
+  NOT part of the project's main requirements.txt (those cover the lightweight,
+  API-based generators/ package only). Install the local generation extras first:
+
+    pip install -r requirements.txt -r requirements-local.txt
+
+  See requirements-local.txt for pinned versions.
 """
 
 import argparse
-import os
 import json
+import os
 import time
 import uuid
 from datetime import datetime
 
-import torch
-from diffusers import DiffusionPipeline
+try:
+    import torch
+    from diffusers import DiffusionPipeline
+except ImportError as exc:  # pragma: no cover - depends on local environment
+    raise ImportError(
+        "prototype/cli/generate.py requires 'torch' and 'diffusers', which are not "
+        "part of the project's main requirements.txt (that file only covers the "
+        "lightweight, API-based generators/ package). Install the local generation "
+        "extras first:\n\n"
+        "    pip install -r requirements.txt -r requirements-local.txt\n"
+    ) from exc
 
 
 def parse_args():
