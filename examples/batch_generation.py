@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 def batch_generate_landscapes():
     """Generate batch of landscape images"""
     logger.info("=== Batch Landscape Generation ===")
-    
+
     prompts = [
         "A peaceful mountain lake surrounded by pine trees during golden hour",
         "A dramatic desert canyon with layered rock formations",
@@ -32,7 +32,7 @@ def batch_generate_landscapes():
         prompts=prompts,
         output_dir=os.path.join(Config.IMAGE_OUTPUT_DIR, "landscapes"),
         num_retries=3,
-        save_metadata=True
+        save_metadata=True,
     )
 
     return results
@@ -41,7 +41,7 @@ def batch_generate_landscapes():
 def batch_generate_character_designs():
     """Generate batch of character design images"""
     logger.info("=== Batch Character Design Generation ===")
-    
+
     prompts = [
         "A steampunk engineer with goggles and brass mechanical armor",
         "An elegant elven archer in flowing green and silver robes",
@@ -55,7 +55,7 @@ def batch_generate_character_designs():
         prompts=prompts,
         output_dir=os.path.join(Config.IMAGE_OUTPUT_DIR, "characters"),
         num_retries=3,
-        save_metadata=True
+        save_metadata=True,
     )
 
     return results
@@ -91,11 +91,11 @@ def main():
     os.makedirs(Config.IMAGE_OUTPUT_DIR, exist_ok=True)
 
     # Run batch generations
-    logger.info("\n" + "="*50)
+    logger.info("\n" + "=" * 50)
     landscape_results = batch_generate_landscapes()
     landscape_analysis = analyze_results(landscape_results)
 
-    logger.info("\n" + "="*50)
+    logger.info("\n" + "=" * 50)
     character_results = batch_generate_character_designs()
     character_analysis = analyze_results(character_results)
 
@@ -114,7 +114,7 @@ def main():
     analysis_file = os.path.join(Config.IMAGE_OUTPUT_DIR, "batch_analysis.json")
     with open(analysis_file, "w") as f:
         json.dump(analysis, f, indent=2)
-    
+
     logger.info(f"\nAnalysis saved to: {analysis_file}")
 
 

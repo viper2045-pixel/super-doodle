@@ -22,13 +22,13 @@ class ImageGeneratorBatch:
 
     def __init__(self, provider: str = "openai"):
         """Initialize batch generator.
-        
+
         Args:
             provider: Image generation provider (openai, gemini, flux)
         """
         if provider not in self.PROVIDERS:
             raise ValueError(f"Unknown provider: {provider}")
-        
+
         self.provider_name = provider
         self.generator = self.PROVIDERS[provider]()
         logger.info(f"Initialized batch generator with {provider}")
@@ -41,19 +41,19 @@ class ImageGeneratorBatch:
         save_metadata: bool = True,
     ) -> List[Dict]:
         """Generate batch of images with metadata.
-        
+
         Args:
             prompts: List of image descriptions
             output_dir: Directory to save metadata
             num_retries: Number of retries per prompt
             save_metadata: Whether to save results to JSON
-            
+
         Returns:
             List of result dictionaries with prompt and URL
         """
         if output_dir is None:
             output_dir = os.getenv("IMAGE_OUTPUT_DIR", "./generated_images")
-        
+
         os.makedirs(output_dir, exist_ok=True)
         results = []
 
@@ -61,7 +61,7 @@ class ImageGeneratorBatch:
 
         for i, prompt in enumerate(prompts, 1):
             logger.info(f"Processing {i}/{len(prompts)}: {prompt[:50]}...")
-            
+
             url = None
             for attempt in range(num_retries):
                 try:
@@ -73,6 +73,7 @@ class ImageGeneratorBatch:
                     )
                     if attempt < num_retries - 1:
                         import time
+
                         wait_time = 2 ** (attempt + 1)
                         logger.info(f"Waiting {wait_time}s before retry...")
                         time.sleep(wait_time)
@@ -95,8 +96,6 @@ class ImageGeneratorBatch:
 
         # Summary
         successful = sum(1 for r in results if r["status"] == "success")
-        logger.info(
-            f"Batch complete: {successful}/{len(prompts)} images generated"
-        )
+        logger.info(f"Batch complete: {successful}/{len(prompts)} images generated")
 
         return results

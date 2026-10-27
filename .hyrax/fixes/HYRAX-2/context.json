@@ -1,0 +1,14 @@
+{
+  "affected_projects": [],
+  "audit_job_id": null,
+  "category": "security",
+  "created_at": "2026-07-04T13:24:56.536709+00:00",
+  "file": "utils/image_utils.py",
+  "line": 24,
+  "mode": "finding",
+  "project_path": null,
+  "ref": "HYRAX-2",
+  "severity": "high",
+  "title": "SSRF: Unvalidated URL passed to requests.get",
+  "tool": "mini_audit"
+}

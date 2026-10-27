@@ -14,7 +14,7 @@ class FluxGenerator(BaseImageGenerator):
 
     def __init__(self, api_key: Optional[str] = None):
         """Initialize Flux generator.
-        
+
         Args:
             api_key: Flux API key (defaults to FLUX_API_KEY env var)
         """
@@ -24,9 +24,7 @@ class FluxGenerator(BaseImageGenerator):
             raise ValueError("FLUX_API_KEY not provided")
 
         super().__init__(api_key)
-        self.endpoint = os.getenv(
-            "FLUX_ENDPOINT", "https://api.blackforestlabs.ai"
-        )
+        self.endpoint = os.getenv("FLUX_ENDPOINT", "https://api.blackforestlabs.ai")
         self.model = "flux-pro"
 
     def generate(
@@ -37,13 +35,13 @@ class FluxGenerator(BaseImageGenerator):
         num_inference_steps: int = 20,
     ) -> str:
         """Generate image using Flux.
-        
+
         Args:
             prompt: Image description
             height: Image height in pixels
             width: Image width in pixels
             num_inference_steps: Number of inference steps
-            
+
         Returns:
             URL of generated image
         """
@@ -55,7 +53,10 @@ class FluxGenerator(BaseImageGenerator):
 
         try:
             logger.info(f"Generating with Flux: {prompt[:50]}...")
-            headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            }
             payload = {
                 "model": self.model,
                 "prompt": prompt,
@@ -88,12 +89,12 @@ class FluxGenerator(BaseImageGenerator):
         width: int = 1024,
     ) -> List[str]:
         """Generate multiple images.
-        
+
         Args:
             prompts: List of image descriptions
             height: Image height
             width: Image width
-            
+
         Returns:
             List of image URLs
         """

@@ -2,7 +2,7 @@
 
 import pytest
 import os
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import patch
 from generators import DALLEGenerator, GeminiGenerator, FluxGenerator
 from utils.config import Config
 
@@ -25,10 +25,10 @@ class TestDALLEGenerator:
         """Test cache functionality"""
         prompt = "Test prompt"
         url = "https://example.com/image.png"
-        
+
         cache_key = f"dalle_{prompt}_1024x1024_standard"
         generator._set_cache(cache_key, url)
-        
+
         cached = generator._get_cached(cache_key)
         assert cached == url
 
